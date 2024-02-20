@@ -1,8 +1,9 @@
+import { BrowserRouter } from "react-router-dom";
 
 export default function App() {
   return (
-    <div className="App">
-        Teste
-    </div>
+    <BrowserRouter>
+      <div className="App">Teste</div>
+    </BrowserRouter>
   );
 }
