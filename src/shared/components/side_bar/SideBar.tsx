@@ -1,11 +1,30 @@
-import { Avatar, Box, Divider, Drawer, Icon, List, ListItemButton, ListItemIcon, ListItemText, useTheme } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Divider,
+  Drawer,
+  Icon,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { ReactNode } from 'react';
+import { useDrawerContext } from '../../contexts';
 
 export default function SideBar({ children }: { children: ReactNode }) {
   const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isDrawerOpen, toggleDrawerOpen } = useDrawerContext();
   return (
     <>
-      <Drawer variant='permanent'>
+      <Drawer
+        open={isDrawerOpen}
+        variant={smDown ? 'temporary' : 'permanent'}
+        onClose={toggleDrawerOpen}
+      >
         <Box
           width={theme.spacing(28)}
           display='flex'
@@ -32,7 +51,7 @@ export default function SideBar({ children }: { children: ReactNode }) {
                 <ListItemIcon>
                   <Icon>home</Icon>
                 </ListItemIcon>
-                <ListItemText primary='Página inicial'/>
+                <ListItemText primary='Página inicial' />
               </ListItemButton>
             </List>
           </Box>
@@ -40,7 +59,7 @@ export default function SideBar({ children }: { children: ReactNode }) {
       </Drawer>
       <Box
         height='100vh'
-        marginLeft={theme.spacing(28)}
+        marginLeft={smDown ? 0 : theme.spacing(28)}
       >
         {children}
       </Box>
