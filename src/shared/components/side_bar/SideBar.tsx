@@ -13,6 +13,37 @@ import {
 } from '@mui/material';
 import { ReactNode } from 'react';
 import { useDrawerContext } from '../../contexts';
+import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
+
+interface IListItemLinkProps {
+  label: string;
+  icon: string;
+  to: string;
+  onClick: (() => void) | undefined;
+}
+
+export function ListItemLink({ to, icon, label, onClick }: IListItemLinkProps) {
+  const navigate = useNavigate();
+
+  const resolvedPath = useResolvedPath(to);
+  const match = useMatch({ path: resolvedPath.pathname, end: false });
+
+  const handleClick = () => {
+    navigate(to);
+    onClick?.();
+  };
+  return (
+    <ListItemButton
+      selected={!!match}
+      onClick={handleClick}
+    >
+      <ListItemIcon>
+        <Icon>{icon}</Icon>
+      </ListItemIcon>
+      <ListItemText primary={label} />
+    </ListItemButton>
+  );
+}
 
 export default function SideBar({ children }: { children: ReactNode }) {
   const theme = useTheme();
@@ -47,12 +78,18 @@ export default function SideBar({ children }: { children: ReactNode }) {
           <Divider />
           <Box flex={1}>
             <List component='nav'>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Icon>home</Icon>
-                </ListItemIcon>
-                <ListItemText primary='Página inicial' />
-              </ListItemButton>
+              <ListItemLink
+                icon='home'
+                to='/pagina-inicial'
+                label='Página inicial'
+                onClick={smDown ? toggleDrawerOpen : undefined}
+              />
+              <ListItemLink
+                icon='star'
+                to='/pagina-inicial2'
+                label='teste'
+                onClick={smDown ? toggleDrawerOpen : undefined}
+              />
             </List>
           </Box>
         </Box>
