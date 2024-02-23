@@ -14,7 +14,7 @@ export default function AppRoutes() {
         label: 'Página inicial',
       },
       {
-        icon: 'star',
+        icon: 'apple',
         path: '/página-inicial',
         label: 'Cidades',
       },

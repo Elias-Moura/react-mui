@@ -1,7 +1,18 @@
-import {LayoutBaseDePaginas} from '../../shared/layouts/LayoutBaseDePaginas';
+import { ListToolBar } from '../../shared/components';
+import { BaseLayout } from '../../shared/layouts/BaseLayout';
 
 export default function Dashboard() {
-  return (<LayoutBaseDePaginas title='Página Inicial'>
-    Testando
-  </LayoutBaseDePaginas>);
+  return (
+    <BaseLayout
+      title='Página Inicial'
+      toolBar={
+        <ListToolBar
+          showSearchBar
+          showBtn
+        />
+      }
+    >
+      Testando
+    </BaseLayout>
+  );
 }

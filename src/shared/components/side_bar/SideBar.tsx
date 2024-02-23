@@ -12,7 +12,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { ReactNode } from 'react';
-import { useDrawerContext } from '../../contexts';
+import { useAppThemeContext, useDrawerContext } from '../../contexts';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 
 interface IListItemLinkProps {
@@ -47,6 +47,7 @@ export function ListItemLink({ to, icon, label, onClick }: IListItemLinkProps) {
 
 export default function SideBar({ children }: { children: ReactNode }) {
   const theme = useTheme();
+  const { toggleTheme, themeName } = useAppThemeContext();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
   return (
@@ -74,7 +75,6 @@ export default function SideBar({ children }: { children: ReactNode }) {
               src='https://ca.slack-edge.com/TASPWCYKU-U021T5TRZ7T-936bbaae5563-512'
             />
           </Box>
-
           <Divider />
           <Box flex={1}>
             <List component='nav'>
@@ -87,6 +87,20 @@ export default function SideBar({ children }: { children: ReactNode }) {
                   onClick={smDown ? toggleDrawerOpen : undefined}
                 />
               ))}
+            </List>
+          </Box>{' '}
+          <Box>
+            <List component='nav'>
+              <ListItemButton onClick={toggleTheme}>
+                <ListItemIcon>
+                  {themeName === 'dark' ? (
+                    <Icon>dark_mode</Icon>
+                  ) : (
+                    <Icon>light_mode</Icon>
+                  )}
+                </ListItemIcon>
+                <ListItemText primary='Alterar tema' />
+              </ListItemButton>
             </List>
           </Box>
         </Box>
