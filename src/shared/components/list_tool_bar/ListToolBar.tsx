@@ -16,6 +16,7 @@ export const ListToolBar: React.FC<IListToolBarProps> = ({
   changeEvent: changeEnvet,
   btnText = 'Novo',
   showBtn = true,
+  clickBtnEvent,
 }) => {
   const theme = useTheme();
 
@@ -49,6 +50,7 @@ export const ListToolBar: React.FC<IListToolBarProps> = ({
             color='primary'
             disableElevation
             endIcon={<Icon>add</Icon>}
+            onClick={clickBtnEvent}
           >
             {btnText}
           </Button>
