@@ -48,7 +48,7 @@ export function ListItemLink({ to, icon, label, onClick }: IListItemLinkProps) {
 export default function SideBar({ children }: { children: ReactNode }) {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const { isDrawerOpen, toggleDrawerOpen } = useDrawerContext();
+  const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
   return (
     <>
       <Drawer
@@ -78,18 +78,15 @@ export default function SideBar({ children }: { children: ReactNode }) {
           <Divider />
           <Box flex={1}>
             <List component='nav'>
-              <ListItemLink
-                icon='home'
-                to='/pagina-inicial'
-                label='Página inicial'
-                onClick={smDown ? toggleDrawerOpen : undefined}
-              />
-              <ListItemLink
-                icon='star'
-                to='/pagina-inicial2'
-                label='teste'
-                onClick={smDown ? toggleDrawerOpen : undefined}
-              />
+              {drawerOptions.map((drawerOption) => (
+                <ListItemLink
+                  key={drawerOption.path}
+                  icon={drawerOption.icon}
+                  to={drawerOption.path}
+                  label={drawerOption.label}
+                  onClick={smDown ? toggleDrawerOpen : undefined}
+                />
+              ))}
             </List>
           </Box>
         </Box>
