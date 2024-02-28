@@ -1,0 +1,14 @@
+{
+  "pessoas": [
+    {
+      "id": 1,
+      "nome": "Elias Moura",
+      "cidade": "RJ"
+    },
+    {
+      "id": 2,
+      "nome": "Ciclano da Silva",
+      "cidade": "SP"
+    }
+  ]
+}
