@@ -1,4 +1,15 @@
-import { Box, Button, Icon, Paper, useTheme } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  Icon,
+  Paper,
+  Skeleton,
+  Theme,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 
 interface IDetailToolProps {
   textNewBtn?: string;
@@ -8,6 +19,11 @@ interface IDetailToolProps {
   showEraseBtn?: boolean;
   showSaveBtn?: boolean;
   showSaveAndCloseBtn?: boolean;
+
+  showLoadingNewBtn?: boolean;
+  showLoadingEraseBtn?: boolean;
+  showLoadingSaveBtn?: boolean;
+  showLoadingSaveAndCloseBtn?: boolean;
 
   clickNewBtn?: () => void;
   clickBackBtn?: () => void;
@@ -25,13 +41,19 @@ export const DetailTool: React.FC<IDetailToolProps> = ({
   showSaveBtn = true,
   showSaveAndCloseBtn = false,
 
+  showLoadingNewBtn = false,
+  showLoadingEraseBtn = false,
+  showLoadingSaveBtn = false,
+  showLoadingSaveAndCloseBtn = false,
+
   clickNewBtn,
   clickBackBtn,
   clickEraseBtn,
   clickSaveBtn,
   clickSaveAndCloseBtn,
-
 }) => {
+  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const theme = useTheme();
 
   return (
@@ -45,7 +67,7 @@ export const DetailTool: React.FC<IDetailToolProps> = ({
       gap={1}
       alignItems='center'
     >
-      {showSaveBtn && (
+      {showSaveBtn && !showLoadingSaveBtn && (
         <Button
           variant='contained'
           color='primary'
@@ -53,10 +75,27 @@ export const DetailTool: React.FC<IDetailToolProps> = ({
           onClick={clickSaveBtn}
           startIcon={<Icon>save</Icon>}
         >
-          Salvar
+          <Typography
+            variant='button'
+            whiteSpace='nowrap'
+            textOverflow='ellipsis'
+            overflow='hidden'
+          >
+            Salvar
+          </Typography>
         </Button>
       )}
-      {showSaveAndCloseBtn && (
+      {showLoadingSaveBtn && (
+        <Skeleton
+          width={110}
+          height={60}
+        />
+      )}
+
+      {showSaveAndCloseBtn &&
+        !showLoadingSaveAndCloseBtn &&
+        !smDown &&
+        !mdDown && (
         <Button
           variant='outlined'
           color='primary'
@@ -64,11 +103,25 @@ export const DetailTool: React.FC<IDetailToolProps> = ({
           onClick={clickSaveAndCloseBtn}
           startIcon={<Icon>save</Icon>}
         >
-          Salvar e voltar
+          <Typography
+            variant='button'
+            whiteSpace='nowrap'
+            textOverflow='ellipsis'
+            overflow='hidden'
+          >
+              Salvar e voltar
+          </Typography>
         </Button>
       )}
 
-      {showEraseBtn && (
+      {showLoadingSaveAndCloseBtn && !smDown && !mdDown && (
+        <Skeleton
+          width={180}
+          height={60}
+        />
+      )}
+
+      {showEraseBtn && !showLoadingEraseBtn && (
         <Button
           variant='outlined'
           color='primary'
@@ -76,10 +129,23 @@ export const DetailTool: React.FC<IDetailToolProps> = ({
           onClick={clickEraseBtn}
           startIcon={<Icon>delete</Icon>}
         >
-          Apagar
+          <Typography
+            variant='button'
+            whiteSpace='nowrap'
+            textOverflow='ellipsis'
+            overflow='hidden'
+          >
+            Apagar
+          </Typography>
         </Button>
       )}
-      {showNewBtn && (
+      {showLoadingEraseBtn && (
+        <Skeleton
+          width={110}
+          height={60}
+        />
+      )}
+      {showNewBtn && !showLoadingNewBtn && !smDown && (
         <Button
           variant='outlined'
           color='primary'
@@ -87,19 +153,45 @@ export const DetailTool: React.FC<IDetailToolProps> = ({
           onClick={clickNewBtn}
           startIcon={<Icon>add</Icon>}
         >
-          {textNewBtn}
+          <Typography
+            variant='button'
+            whiteSpace='nowrap'
+            textOverflow='ellipsis'
+            overflow='hidden'
+          >
+            {textNewBtn}
+          </Typography>
         </Button>
       )}
+      {showLoadingNewBtn && !smDown && (
+        <Skeleton
+          width={110}
+          height={60}
+        />
+      )}
       {showBackBtn && (
-        <Button
-          variant='outlined'
-          color='primary'
-          disableElevation
-          onClick={clickBackBtn}
-          startIcon={<Icon>arrow_back</Icon>}
-        >
-          Voltar
-        </Button>
+        <>
+          <Divider
+            variant='middle'
+            orientation='vertical'
+          />
+          <Button
+            variant='outlined'
+            color='primary'
+            disableElevation
+            onClick={clickBackBtn}
+            startIcon={<Icon>arrow_back</Icon>}
+          >
+            <Typography
+              variant='button'
+              whiteSpace='nowrap'
+              textOverflow='ellipsis'
+              overflow='hidden'
+            >
+              Voltar
+            </Typography>
+          </Button>
+        </>
       )}
     </Box>
   );
